@@ -17,7 +17,7 @@ export const opts: LanguageEmitterOpts = {
   hooks: generateHooks(hooks),
   fileExtension: '.js',
   commandPrefixPadding: '  ',
-  terminatingKeyword: '})',
+  terminatingKeyword: '// terminating keyword',
   commentPrefix: '//',
   generateMethodDeclaration: function generateMethodDeclaration(name: string) {
     return `// method declaration ${name}`

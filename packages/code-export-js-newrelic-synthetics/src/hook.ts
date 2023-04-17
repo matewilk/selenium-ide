@@ -85,7 +85,10 @@ function declareVariables() {
       commands: [
         {
           level: 0,
-          statement: `// variables go here`,
+          statement: `// variables go here
+            const By = $selenium.By;
+            const until = $selenium.until;
+          `.replace(/^ +/gm, ''), // remove all spaces so that the indentation is correct
         },
       ],
     },
