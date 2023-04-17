@@ -1,0 +1,72 @@
+{
+  "id": "d4813a60-3e17-4c16-a1ca-8bbac14405a8",
+  "version": "2.0",
+  "name": "exporter",
+  "url": "https://newrelic.com",
+  "tests": [{
+    "id": "517b428b-e343-4e81-9200-ca5c47550ef6",
+    "name": "newrelic",
+    "commands": [{
+      "id": "01ce526c-abb8-4cc8-8e46-b07bc003dab4",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dd1cd2bc-5647-4543-a2d2-659d01f81404",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1753x1483",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a3453392-6c04-42f8-839e-60ef0218acf3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.hidden > .js-header-search-trigger svg",
+      "targets": [
+        ["css=.hidden > .js-header-search-trigger svg", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c60c996-0fb2-4a8f-ab3d-1453da1501b9",
+      "comment": "",
+      "command": "type",
+      "target": "id=header-search",
+      "targets": [
+        ["id=header-search", "id"],
+        ["name=search", "name"],
+        ["css=#header-search", "css:finder"],
+        ["xpath=//input[@id='header-search']", "xpath:attributes"],
+        ["xpath=//div[@id='header-search-form']/div/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "synthetics"
+    }, {
+      "id": "69618494-6d87-456e-bad7-c866e537591e",
+      "comment": "",
+      "command": "sendKeys",
+      "target": "id=header-search",
+      "targets": [
+        ["id=header-search", "id"],
+        ["name=search", "name"],
+        ["css=#header-search", "css:finder"],
+        ["xpath=//input[@id='header-search']", "xpath:attributes"],
+        ["xpath=//div[@id='header-search-form']/div/form/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "${KEY_ENTER}"
+    }]
+  }],
+  "suites": [{
+    "id": "94b2aca7-c575-4032-b71b-9a7bd99f47fa",
+    "name": "NewRelic",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["517b428b-e343-4e81-9200-ca5c47550ef6"]
+  }],
+  "urls": ["https://newrelic.com/"],
+  "plugins": []
+}
