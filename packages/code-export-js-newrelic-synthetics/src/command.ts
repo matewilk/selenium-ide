@@ -7,6 +7,7 @@ import {
 } from 'side-code-export'
 import { CommandShape } from '@seleniumhq/side-model'
 import location from './location'
+import selection from './selection'
 
 const emitWaitForWindow = async () => {
   const generateMethodDeclaration = (name: string) => {
@@ -198,18 +199,20 @@ const emitSetWindowSize = async (size: string) => {
 
 const emitSelect = async (selectElement: string, option: string) => {
   const commands = [
+    { level: 0, statement: `{` },
     {
-      level: 0,
+      level: 1,
       statement: `const dropdown = await $webDriver.wait(until.elementLocated(${await location.emit(
         selectElement
       )}))`,
     },
     {
-      level: 0,
-      statement: `await dropdown.wait(until.elementLocated(${await location.emit(
+      level: 1,
+      statement: `await dropdown.findElement(${await selection.emit(
         option
-      )})).click()`,
+      )}).click()`,
     },
+    { level: 0, statement: `}` },
   ]
   return Promise.resolve({ commands })
 }
@@ -358,6 +361,7 @@ export const emitters: Record<string, ProcessedCommandEmitter> = {
   end: skip,
   executeScript: emitExecuteScript,
   executeAsyncScript: emitExecuteAsyncScript,
+  removeSelection: emitSelect,
   select: emitSelect,
   selectFrame: emitSelectFrame,
   selectWindow: emitSelectWindow,
