@@ -88,6 +88,7 @@ function declareVariables() {
           statement: `// variables go here
             const By = $selenium.By;
             const until = $selenium.until;
+            const vars = new Map();
           `.replace(/^ +/gm, ''), // remove all spaces so that the indentation is correct
         },
       ],
