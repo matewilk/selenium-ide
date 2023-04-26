@@ -9,6 +9,12 @@ import { CommandShape } from '@seleniumhq/side-model'
 import location from './location'
 import selection from './selection'
 
+const variableSetter = (varName: string, value: string) =>
+  varName ? `vars["${varName}"] = ${value}` : ''
+
+const emitStoreWindowHandle = async (varName: string) =>
+  Promise.resolve(variableSetter(varName, 'await $webDriver.getWindowHandle()'))
+
 const emitWaitForWindow = async () => {
   const generateMethodDeclaration = (name: string) => {
     return {
@@ -17,11 +23,11 @@ const emitWaitForWindow = async () => {
     }
   }
   const commands = [
-    { level: 0, statement: 'await driver.sleep(timeout)' },
+    { level: 0, statement: 'await $webDriver.sleep(timeout)' },
     { level: 0, statement: 'const handlesThen = vars["windowHandles"]' },
     {
       level: 0,
-      statement: 'const handlesNow = await driver.getAllWindowHandles()',
+      statement: 'const handlesNow = await $webDriver.getAllWindowHandles()',
     },
     { level: 0, statement: 'if (handlesNow.length > handlesThen.length) {' },
     {
@@ -47,7 +53,7 @@ const emitNewWindowHandling = async (
   emittedCommand: ExportFlexCommandShape
 ) =>
   Promise.resolve(
-    `vars["windowHandles"] = await driver.getAllWindowHandles()\n${await emittedCommand}\nvars["${
+    `vars["windowHandles"] = await $webDriver.getAllWindowHandles()\n${await emittedCommand}\nvars["${
       command.windowHandleName
     }"] = await waitForWindow(${command.windowTimeout})`
   )
@@ -170,9 +176,6 @@ const generateScriptArguments = (script: ScriptShape) =>
     .map((varName) => `vars["${varName}"]`)
     .join(',')}`
 
-const variableSetter = (varName: string, value: string) =>
-  varName ? `vars["${varName}"] = ${value}` : ''
-
 const emitExecuteScript = async (script: ScriptShape, varName: string) => {
   const scriptString = script.script.replace(/`/g, '\\`')
   const result = `await $webDriver.executeScript("${scriptString}"${generateScriptArguments(
@@ -247,15 +250,15 @@ const emitSelectFrame = async (frameLocation: string) => {
 const emitSelectWindow = async (windowLocation: string) => {
   if (/^handle=/.test(windowLocation)) {
     return Promise.resolve(
-      `await $webDriver.switchTo().window("${
+      `await $webDriver.switchTo().window(${
         windowLocation.split('handle=')?.[1]
-      }")`
+      })`
     )
   } else if (/^name=/.test(windowLocation)) {
     return Promise.resolve(
-      `await $webDriver.switchTo().window("${
+      `await $webDriver.switchTo().window(${
         windowLocation.split('name=')?.[1]
-      }")`
+      })`
     )
   } else if (/^win_ser_/.test(windowLocation)) {
     if (windowLocation === 'win_ser_local') {
@@ -366,6 +369,7 @@ export const emitters: Record<string, ProcessedCommandEmitter> = {
   selectFrame: emitSelectFrame,
   selectWindow: emitSelectWindow,
   setWindowSize: emitSetWindowSize,
+  storeWindowHandle: emitStoreWindowHandle,
   type: emitType,
   webdriverAnswerOnVisiblePrompt: emitAnswerOnNextPrompt,
   webdriverChooseCancelOnVisibleConfirmation:
