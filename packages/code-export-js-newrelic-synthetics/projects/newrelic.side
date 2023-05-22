@@ -1,27 +1,27 @@
 {
-  "id": "d4813a60-3e17-4c16-a1ca-8bbac14405a8",
+  "id": "4d29bd59-3093-4ef9-b219-d385cb757d86",
   "version": "2.0",
-  "name": "exporter",
+  "name": "newrelic",
   "url": "https://newrelic.com",
   "tests": [{
-    "id": "517b428b-e343-4e81-9200-ca5c47550ef6",
+    "id": "ddc74f91-d977-4ad7-bb67-579d5aef4fd1",
     "name": "newrelic",
     "commands": [{
-      "id": "01ce526c-abb8-4cc8-8e46-b07bc003dab4",
+      "id": "632beb64-bcae-4edf-a20f-9b5ea222c0b0",
       "comment": "",
       "command": "open",
       "target": "/",
       "targets": [],
       "value": ""
     }, {
-      "id": "dd1cd2bc-5647-4543-a2d2-659d01f81404",
+      "id": "3fc3d7f3-f590-45aa-96ab-d811dda51836",
       "comment": "",
       "command": "setWindowSize",
-      "target": "1753x1483",
+      "target": "1680x940",
       "targets": [],
       "value": ""
     }, {
-      "id": "a3453392-6c04-42f8-839e-60ef0218acf3",
+      "id": "d339c687-761f-4ffd-806f-e06ed1a58ac7",
       "comment": "",
       "command": "click",
       "target": "css=.hidden > .js-header-search-trigger svg",
@@ -30,7 +30,7 @@
       ],
       "value": ""
     }, {
-      "id": "5c60c996-0fb2-4a8f-ab3d-1453da1501b9",
+      "id": "767b7c24-6c9a-45e3-903a-65171bd83757",
       "comment": "",
       "command": "type",
       "target": "id=header-search",
@@ -44,28 +44,34 @@
       ],
       "value": "synthetics"
     }, {
-      "id": "69618494-6d87-456e-bad7-c866e537591e",
+      "id": "fba48839-92aa-4fde-8eb1-ae2d470ad90d",
       "comment": "",
-      "command": "sendKeys",
-      "target": "id=header-search",
+      "command": "click",
+      "target": "css=.js-search-form-submit svg",
       "targets": [
-        ["id=header-search", "id"],
-        ["name=search", "name"],
-        ["css=#header-search", "css:finder"],
-        ["xpath=//input[@id='header-search']", "xpath:attributes"],
-        ["xpath=//div[@id='header-search-form']/div/form/input", "xpath:idRelative"],
-        ["xpath=//input", "xpath:position"]
+        ["css=.js-search-form-submit svg", "css:finder"]
       ],
-      "value": "${KEY_ENTER}"
+      "value": ""
+    }, {
+      "id": "9d5574df-2bc5-4a1a-80c9-4aef50372639",
+      "comment": "",
+      "command": "click",
+      "target": "css=.st-app-result:nth-child(1) .st-app-result__title",
+      "targets": [
+        ["css=.st-app-result:nth-child(1) .st-app-result__title", "css:finder"],
+        ["xpath=//div[@id='nr-search-app']/div/div[2]/div/a/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div/a/div", "xpath:position"]
+      ],
+      "value": ""
     }]
   }],
   "suites": [{
-    "id": "94b2aca7-c575-4032-b71b-9a7bd99f47fa",
-    "name": "NewRelic",
+    "id": "56de0e12-c4e1-4bda-a6d8-9aad8c82bd74",
+    "name": "New Relic Suite",
     "persistSession": false,
     "parallel": false,
     "timeout": 300,
-    "tests": ["517b428b-e343-4e81-9200-ca5c47550ef6"]
+    "tests": ["ddc74f91-d977-4ad7-bb67-579d5aef4fd1"]
   }],
   "urls": ["https://newrelic.com/"],
   "plugins": []

@@ -12,13 +12,13 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "tsc",
-    "build:code": "side-code-export ./dist/index.js ./projects/plugin.side ./tests",
+    "build:code": "side-code-export ./dist/index.js ./projects/newrelic.side ./tests",
     "clean": "rm -rf dist tsconfig.tsbuildinfo node_modules",
     "watch": "tsc --watch"
   },
   "main": "dist/index.js",
   "dependencies": {
-    "side-code-export": "^4.0.0-alpha.5"
+    "side-code-export": "^4.0.0-alpha.6"
   },
   "devDependencies": {
     "@seleniumhq/side-model": "^4.0.0-alpha.3"

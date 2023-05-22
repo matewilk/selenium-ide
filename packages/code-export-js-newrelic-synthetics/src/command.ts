@@ -1,4 +1,5 @@
 import {
+  EmitterContext,
   codeExport as exporter,
   ExportFlexCommandShape,
   PrebuildEmitter,
@@ -289,12 +290,15 @@ const emitSelectWindow = async (windowLocation: string) => {
   }
 }
 
-const emitOpen = async (target: string) => {
+const emitOpen = async (
+  target: string,
+  _value: unknown,
+  context: EmitterContext
+) => {
   const url = /^(file|http|https):\/\//.test(target)
-    ? `"${target}"`
-    : // @ts-expect-error globals yuck
-      `"${global.baseUrl}${target}"`
-  return Promise.resolve(`await $webDriver.get(${url})`)
+    ? target
+    : `${context.project.url}${target}`
+  return Promise.resolve(`await $webDriver.get("${url}")`)
 }
 
 const generateSendKeysInput = (value: string | string[]) => {
@@ -332,8 +336,9 @@ const variableLookup = (varName: string) => {
   return `vars["${varName}"]`
 }
 
-function emit(command: CommandShape) {
+function emit(command: CommandShape, context: EmitterContext) {
   return exporter.emit.command(command, emitters[command.command], {
+    context,
     variableLookup,
     emitNewWindowHandling,
   })
